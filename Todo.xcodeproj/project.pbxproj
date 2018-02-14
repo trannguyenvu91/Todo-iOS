@@ -18,6 +18,15 @@
 		121219E5203025C90074624C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121219DE203025C90074624C /* Errors.swift */; };
 		121219E6203025C90074624C /* MDServerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121219E0203025C90074624C /* MDServerService.swift */; };
 		121219E7203025C90074624C /* MDCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121219E2203025C90074624C /* MDCollectionViewDataSource.swift */; };
+		1267BEF72033D07A004E4555 /* MDDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BEF62033D07A004E4555 /* MDDatabase.swift */; };
+		1267BEF92033D0FA004E4555 /* MDUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BEF82033D0FA004E4555 /* MDUser.swift */; };
+		1267BF002033DEE0004E4555 /* TodoFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BEFF2033DEE0004E4555 /* TodoFlow.swift */; };
+		1267BF022033E296004E4555 /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BF012033E296004E4555 /* TodoListViewController.swift */; };
+		1267BF042033EC4A004E4555 /* MDTodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BF032033EC4A004E4555 /* MDTodoItem.swift */; };
+		1267BF0620342704004E4555 /* MDTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BF0520342704004E4555 /* MDTableViewDataSource.swift */; };
+		1267BF0920342B3A004E4555 /* MDTodoListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BF0820342B3A004E4555 /* MDTodoListProvider.swift */; };
+		1267BF0B20342C65004E4555 /* TodoTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BF0A20342C65004E4555 /* TodoTableCell.swift */; };
+		1267BF0D20343D0B004E4555 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BF0C20343D0B004E4555 /* ItemViewController.swift */; };
 		3D7C0F2B4603975220EA7283 /* Pods_TodoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC17D0DE111CF215BA6FC46F /* Pods_TodoTests.framework */; };
 		4EBD80794AC1C9EDEA90CFD7 /* Pods_Todo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37532B9E541D3F4D60C86B8D /* Pods_Todo.framework */; };
 /* End PBXBuildFile section */
@@ -49,6 +58,15 @@
 		121219DE203025C90074624C /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		121219E0203025C90074624C /* MDServerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDServerService.swift; sourceTree = "<group>"; };
 		121219E2203025C90074624C /* MDCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		1267BEF62033D07A004E4555 /* MDDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDDatabase.swift; sourceTree = "<group>"; };
+		1267BEF82033D0FA004E4555 /* MDUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDUser.swift; sourceTree = "<group>"; };
+		1267BEFF2033DEE0004E4555 /* TodoFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoFlow.swift; sourceTree = "<group>"; };
+		1267BF012033E296004E4555 /* TodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
+		1267BF032033EC4A004E4555 /* MDTodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDTodoItem.swift; sourceTree = "<group>"; };
+		1267BF0520342704004E4555 /* MDTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDTableViewDataSource.swift; sourceTree = "<group>"; };
+		1267BF0820342B3A004E4555 /* MDTodoListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDTodoListProvider.swift; sourceTree = "<group>"; };
+		1267BF0A20342C65004E4555 /* TodoTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableCell.swift; sourceTree = "<group>"; };
+		1267BF0C20343D0B004E4555 /* ItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
 		2EE1D1CB4170E96AD56CE171 /* Pods-Todo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Todo/Pods-Todo.release.xcconfig"; sourceTree = "<group>"; };
 		37532B9E541D3F4D60C86B8D /* Pods_Todo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Todo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		990A8E3F4093B46D3FCE91B2 /* Pods-TodoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodoTests/Pods-TodoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -100,13 +118,17 @@
 			isa = PBXGroup;
 			children = (
 				121219AE202EF09A0074624C /* AppDelegate.swift */,
+				1267BEFF2033DEE0004E4555 /* TodoFlow.swift */,
 				121219B0202EF09A0074624C /* LoginViewController.swift */,
+				1267BF0C20343D0B004E4555 /* ItemViewController.swift */,
+				1267BF0720342B1A004E4555 /* TodoList */,
 				121219B2202EF09A0074624C /* Main.storyboard */,
 				121219B5202EF09A0074624C /* Assets.xcassets */,
 				121219B7202EF09A0074624C /* LaunchScreen.storyboard */,
 				121219BA202EF09A0074624C /* Info.plist */,
-				121219E1203025C90074624C /* Helpers */,
+				1267BEFA2033D103004E4555 /* Database */,
 				121219DF203025C90074624C /* Services */,
+				121219E1203025C90074624C /* Helpers */,
 				121219DB203025C90074624C /* Utilities */,
 			);
 			path = Todo;
@@ -143,8 +165,29 @@
 			isa = PBXGroup;
 			children = (
 				121219E2203025C90074624C /* MDCollectionViewDataSource.swift */,
+				1267BF0520342704004E4555 /* MDTableViewDataSource.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		1267BEFA2033D103004E4555 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				1267BEF62033D07A004E4555 /* MDDatabase.swift */,
+				1267BEF82033D0FA004E4555 /* MDUser.swift */,
+				1267BF032033EC4A004E4555 /* MDTodoItem.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		1267BF0720342B1A004E4555 /* TodoList */ = {
+			isa = PBXGroup;
+			children = (
+				1267BF012033E296004E4555 /* TodoListViewController.swift */,
+				1267BF0820342B3A004E4555 /* MDTodoListProvider.swift */,
+				1267BF0A20342C65004E4555 /* TodoTableCell.swift */,
+			);
+			path = TodoList;
 			sourceTree = "<group>";
 		};
 		EDE9135A65979C015E3F3764 /* Frameworks */ = {
@@ -383,12 +426,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				121219E3203025C90074624C /* MDDataProtocols.swift in Sources */,
+				1267BF0D20343D0B004E4555 /* ItemViewController.swift in Sources */,
+				1267BF022033E296004E4555 /* TodoListViewController.swift in Sources */,
+				1267BEF72033D07A004E4555 /* MDDatabase.swift in Sources */,
 				121219E5203025C90074624C /* Errors.swift in Sources */,
 				121219B1202EF09A0074624C /* LoginViewController.swift in Sources */,
+				1267BF042033EC4A004E4555 /* MDTodoItem.swift in Sources */,
+				1267BEF92033D0FA004E4555 /* MDUser.swift in Sources */,
+				1267BF002033DEE0004E4555 /* TodoFlow.swift in Sources */,
 				121219E7203025C90074624C /* MDCollectionViewDataSource.swift in Sources */,
+				1267BF0920342B3A004E4555 /* MDTodoListProvider.swift in Sources */,
 				121219E6203025C90074624C /* MDServerService.swift in Sources */,
 				121219E4203025C90074624C /* MDConstant.swift in Sources */,
+				1267BF0620342704004E4555 /* MDTableViewDataSource.swift in Sources */,
 				121219AF202EF09A0074624C /* AppDelegate.swift in Sources */,
+				1267BF0B20342C65004E4555 /* TodoTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

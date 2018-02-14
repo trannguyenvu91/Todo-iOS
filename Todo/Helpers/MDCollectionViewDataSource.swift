@@ -8,19 +8,8 @@
 
 import UIKit
 
-@objc protocol MDCollectionViewDataSourceProtocol: NSObjectProtocol {
-    //Data source
-    @objc optional func collectionView(_ collectionView: UICollectionView, referenceSizeForHeaderInSection section: Int) -> CGSize
-    @objc optional func collectionView(_ collectionView: UICollectionView, referenceSizeForFooterInSection section: Int) -> CGSize
-    @objc optional func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
-    func collectionView(_ collectionView: UICollectionView, itemSizeAt indexPath: IndexPath) -> CGSize
-    //collection View delegates
-    @objc optional func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
-    @objc optional func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath)
-    @objc optional func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
-    @objc optional func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
-    @objc optional func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
-    @objc optional func scrollViewDidScroll(_ scrollView: UIScrollView)
+@objc protocol MDCollectionViewDataSourceProtocol: UICollectionViewDelegateFlowLayout {
+
 }
 
 //MARK: Initialization
@@ -73,54 +62,40 @@ extension MDCollectionViewDataSource: UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let reusableView = owner.collectionView!(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
-        return reusableView
-    }
 }
 
 //MARK: UICollectionViewDelegateFlowLayout
 extension MDCollectionViewDataSource: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return owner.collectionView(collectionView, itemSizeAt: indexPath)
+        return owner.collectionView!(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if let size = owner.collectionView?(collectionView, referenceSizeForHeaderInSection: section) {
+        if let size = owner.collectionView?(collectionView, layout: collectionViewLayout, referenceSizeForHeaderInSection: section) {
             return size
         }
         return CGSize.zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if let size = owner.collectionView?(collectionView, referenceSizeForFooterInSection: section) {
+        if let size = owner.collectionView?(collectionView, layout: collectionViewLayout, referenceSizeForFooterInSection: section) {
             return size
         }
         return CGSize.zero
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        owner.collectionView?(collectionView, didSelectItemAt: indexPath)
+    override func responds(to aSelector: Selector!) -> Bool {
+        if owner.responds(to: aSelector) {
+            return true
+        }
+        return super.responds(to: aSelector)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        owner.collectionView?(collectionView, didDeselectItemAt: indexPath)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        owner.collectionView?(collectionView, willDisplay: cell, forItemAt: indexPath)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        owner.collectionView?(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        owner.scrollViewDidEndDecelerating?(scrollView)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        owner.scrollViewDidScroll?(scrollView)
+    override func forwardingTarget(for aSelector: Selector!) -> Any? {
+        if owner.responds(to: aSelector) {
+            return owner
+        }
+        return super.forwardingTarget(for: aSelector)
     }
     
 }
