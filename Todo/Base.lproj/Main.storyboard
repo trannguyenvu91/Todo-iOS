@@ -209,7 +209,7 @@
         <!--Sign Up-->
         <scene sceneID="djW-XK-Dw9">
             <objects>
-                <viewController title="Sign Up" id="Ari-h6-zmr" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterViewController" title="Sign Up" id="Ari-h6-zmr" customClass="RegisterViewController" customModule="Todo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q99-F8-o32">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -229,6 +229,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZK-Wc-a4h">
                                 <rect key="frame" x="146.5" y="215" width="82" height="30"/>
                                 <state key="normal" title="Sign me up!"/>
+                                <connections>
+                                    <action selector="signUpDidClick:" destination="Ari-h6-zmr" eventType="touchUpInside" id="AiM-t8-jiD"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Register new account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6j-Ef-gBZ">
                                 <rect key="frame" x="104.5" y="42" width="166" height="21"/>
@@ -252,6 +255,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qyI-qW-gUX"/>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="cHL-Zs-VwD" id="eoR-5y-1Ek"/>
+                        <outlet property="passwordTextField" destination="qLU-VF-tsT" id="F50-Bo-VDs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IIC-zS-zEO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

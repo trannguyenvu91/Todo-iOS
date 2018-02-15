@@ -72,7 +72,7 @@ class MDServerService: NSObject {
     func createItem(token: String, item: String, due: String, success: @escaping (MDTodoItem) -> Void, failure: @escaping MDRequestFailure) {
         let request = URLRequest.mdRequest(path: RoutingPath.create, method: .post, token: token, param: ["item": item, "due": due])
         let resource = MDResource<MDTodoItem>(URLRequest: request!) { (data) -> MDTodoItem in
-            if let json = data as? JSON, let arr = json["items"] as? JSON {
+            if let json = data as? JSON, let arr = json["item"] as? JSON {
                 return MDTodoItem(from: arr)
             }
             return MDTodoItem(from: [:])

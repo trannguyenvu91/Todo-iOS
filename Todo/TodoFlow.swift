@@ -7,59 +7,55 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class TodoFlow: NSObject {
     
     var navigationVC: UINavigationController!
     
-    
     func setupRootVC(for window: UIWindow) {
-        let storyBoard = getMainStoryBoard()
-        let loginVC = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        navigationVC = UINavigationController(rootViewController: loginVC)
+        let rootVC = hasLogin() ? getTodoListVC() : getLoginVC()
+        navigationVC = UINavigationController(rootViewController: rootVC)
         navigationVC.delegate = self
         window.rootViewController = navigationVC
         window.makeKeyAndVisible()
-        
-        loginVC.loginSuccess = {
-            self.presentTodoListVC()
-        }
-        loginVC.title = "Login"
-    }
-    
-    func getMainStoryBoard() -> UIStoryboard {
-        return UIStoryboard(name: "Main", bundle: nil)
     }
     
     func presentTodoListVC() {
-        let storyBoard = getMainStoryBoard()
-        let todoListVC = storyBoard.instantiateViewController(withIdentifier: "TodoListViewController") as! TodoListViewController
-        todoListVC.title = "Todo list"
-        todoListVC.didSelectItem = { item in
-            self.presentItemVC(item: item)
-        }
+        let todoListVC = getTodoListVC()
         navigationVC.setViewControllers([todoListVC], animated: true)
     }
     
     func presentItemVC(item: MDTodoItem) {
-        let storyBoard = getMainStoryBoard()
-        let itemVC = storyBoard.instantiateViewController(withIdentifier: "ItemViewController") as! ItemViewController
-        itemVC.title = "Item detail"
-        itemVC.item = item
-        itemVC.completionSuccessful = { [weak self] in
-            self?.navigationVC.popViewController(animated: true)
-        }
+        let itemVC = getItemVC(item: item)
         navigationVC.pushViewController(itemVC, animated: true)
     }
     
     @objc func presentCreateVC() {
-        let storyBoard = getMainStoryBoard()
-        let itemVC = storyBoard.instantiateViewController(withIdentifier: "ItemViewController") as! ItemViewController
+        let itemVC = getItemVC(item: nil)
         itemVC.title = "Create New"
-        itemVC.completionSuccessful = { [weak self] in
-            self?.navigationVC.popViewController(animated: true)
-        }
         navigationVC.pushViewController(itemVC, animated: true)
+    }
+    
+    func presentSignUpVC() {
+        let signUpVC = getRegisterVC()
+        navigationVC.pushViewController(signUpVC, animated: true)
+    }
+    
+    @objc func logout() {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.deleteAll()
+        }
+        MDUser.clearSessionUser()
+        let loginVC = getLoginVC()
+        navigationVC.setViewControllers([loginVC], animated: true)
+    }
+    
+    func hasLogin() -> Bool {
+        let token = MDUser.sessionUser.token
+        return token.count > 0
     }
     
 }
@@ -69,12 +65,72 @@ extension TodoFlow: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if let _ = viewController as? TodoListViewController {
             setupCreateNewButton(for: viewController)
+            setupLogoutButton(for: viewController)
         }
     }
     
     func setupCreateNewButton(for viewcontroller: UIViewController) {
         let barItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentCreateVC))
         viewcontroller.navigationItem.rightBarButtonItem = barItem
+    }
+    
+    func setupLogoutButton(for viewcontroller: UIViewController) {
+        let barItem = UIBarButtonItem(title: "LogOut", style: .plain, target: self, action: #selector(logout))
+        viewcontroller.navigationItem.leftBarButtonItem = barItem
+    }
+    
+}
+
+//MARK: Get ViewControllers
+extension TodoFlow {
+    
+    func getTodoListVC() -> UIViewController {
+        let storyBoard = getMainStoryBoard()
+        let todoListVC = storyBoard.instantiateViewController(withIdentifier: "TodoListViewController") as! TodoListViewController
+        todoListVC.title = "Todo list"
+        todoListVC.didSelectItem = { [weak self] item in
+            self?.presentItemVC(item: item)
+        }
+        return todoListVC
+    }
+    
+    func getLoginVC() -> UIViewController {
+        let storyBoard = getMainStoryBoard()
+        let loginVC = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        loginVC.loginSuccess = { [weak self] in
+            self?.presentTodoListVC()
+        }
+        loginVC.signUpCallBack = { [weak self] in
+            self?.presentSignUpVC()
+        }
+        loginVC.title = "Login"
+        return loginVC
+    }
+    
+    func getItemVC(item: MDTodoItem?) -> UIViewController {
+        let storyBoard = getMainStoryBoard()
+        let itemVC = storyBoard.instantiateViewController(withIdentifier: "ItemViewController") as! ItemViewController
+        itemVC.title = "Item detail"
+        itemVC.item = item
+        itemVC.completionSuccessful = { [weak self] in
+            self?.navigationVC.popViewController(animated: true)
+        }
+        return itemVC
+    }
+    
+    func getRegisterVC() -> UIViewController {
+        let storyBoard = getMainStoryBoard()
+        let registerVC = storyBoard.instantiateViewController(withIdentifier: "RegisterViewController") as! RegisterViewController
+        registerVC.loginSuccess = { [weak self] in
+            self?.presentTodoListVC()
+        }
+        registerVC.title = "Create new"
+        return registerVC
+        
+    }
+    
+    func getMainStoryBoard() -> UIStoryboard {
+        return UIStoryboard(name: "Main", bundle: nil)
     }
     
 }

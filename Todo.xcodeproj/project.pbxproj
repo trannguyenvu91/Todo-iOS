@@ -18,6 +18,7 @@
 		121219E5203025C90074624C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121219DE203025C90074624C /* Errors.swift */; };
 		121219E6203025C90074624C /* MDServerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121219E0203025C90074624C /* MDServerService.swift */; };
 		121219E7203025C90074624C /* MDCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121219E2203025C90074624C /* MDCollectionViewDataSource.swift */; };
+		12533D1D20357C46006173DB /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12533D1C20357C46006173DB /* RegisterViewController.swift */; };
 		1267BEF72033D07A004E4555 /* MDDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BEF62033D07A004E4555 /* MDDatabase.swift */; };
 		1267BEF92033D0FA004E4555 /* MDUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BEF82033D0FA004E4555 /* MDUser.swift */; };
 		1267BF002033DEE0004E4555 /* TodoFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267BEFF2033DEE0004E4555 /* TodoFlow.swift */; };
@@ -58,6 +59,7 @@
 		121219DE203025C90074624C /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		121219E0203025C90074624C /* MDServerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDServerService.swift; sourceTree = "<group>"; };
 		121219E2203025C90074624C /* MDCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		12533D1C20357C46006173DB /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		1267BEF62033D07A004E4555 /* MDDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDDatabase.swift; sourceTree = "<group>"; };
 		1267BEF82033D0FA004E4555 /* MDUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDUser.swift; sourceTree = "<group>"; };
 		1267BEFF2033DEE0004E4555 /* TodoFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoFlow.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				1267BEFF2033DEE0004E4555 /* TodoFlow.swift */,
 				121219B0202EF09A0074624C /* LoginViewController.swift */,
 				1267BF0C20343D0B004E4555 /* ItemViewController.swift */,
+				12533D1C20357C46006173DB /* RegisterViewController.swift */,
 				1267BF0720342B1A004E4555 /* TodoList */,
 				121219B2202EF09A0074624C /* Main.storyboard */,
 				121219B5202EF09A0074624C /* Assets.xcassets */,
@@ -438,6 +441,7 @@
 				1267BF0920342B3A004E4555 /* MDTodoListProvider.swift in Sources */,
 				121219E6203025C90074624C /* MDServerService.swift in Sources */,
 				121219E4203025C90074624C /* MDConstant.swift in Sources */,
+				12533D1D20357C46006173DB /* RegisterViewController.swift in Sources */,
 				1267BF0620342704004E4555 /* MDTableViewDataSource.swift in Sources */,
 				121219AF202EF09A0074624C /* AppDelegate.swift in Sources */,
 				1267BF0B20342C65004E4555 /* TodoTableCell.swift in Sources */,

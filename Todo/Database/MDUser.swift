@@ -10,9 +10,33 @@ import UIKit
 import Realm
 import RealmSwift
 
-class MDUser: NSObject {
-    var token = ""
-    var id = ""
+class MDUser: Object {
+    @objc dynamic var token = ""
+    @objc dynamic var email = ""
     
-    static var sessionUser = MDUser()
+    private static var _user: MDUser?
+    
+    static var sessionUser: MDUser {
+        if _user == nil {
+            _user = initializeUser()
+        }
+        return _user!
+    }
+    
+    override static func primaryKey() -> String? {
+        return "email"
+    }
+    
+    private class func initializeUser() -> MDUser {
+        let realm = try! Realm()
+        if let user = realm.objects(MDUser.self).first {
+            return user
+        }
+        return MDUser()
+    }
+    
+    class func clearSessionUser() {
+        _user = nil
+    }
+    
 }

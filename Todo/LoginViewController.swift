@@ -7,11 +7,13 @@
 //
 
 import UIKit
-import Foundation
+import Realm
+import RealmSwift
 
 class LoginViewController: UIViewController {
 
     var loginSuccess: (() -> Void)?
+    var signUpCallBack: (() -> Void)?
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     let viewModel = LoginViewModel()
@@ -35,7 +37,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func btnSignupClicked(_ sender: Any) {
-        
+        signUpCallBack?()
     }
     
 }
@@ -48,8 +50,9 @@ class LoginViewModel: NSObject {
     func login(user: String, password: String) {
         MDServerService.shareInstance().login(email: user, password: password, success: { [weak self] (response) in
             if let token = response["token"] as? String {
+                MDUser.sessionUser.email = user
                 MDUser.sessionUser.token = token
-                self?.loginSuccess?()
+                self?.didLogin()
             } else if let errorMessage = response["error"] as? String {
                 self?.loginError(message: errorMessage)
             } else {
@@ -67,6 +70,15 @@ class LoginViewModel: NSObject {
             alert.addAction(dismissAction)
             self.presentVC?(alert)
         }
+    }
+    
+    func didLogin() {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.deleteAll()
+            realm.add(MDUser.sessionUser, update: true)
+        }
+        loginSuccess?()
     }
     
 }
