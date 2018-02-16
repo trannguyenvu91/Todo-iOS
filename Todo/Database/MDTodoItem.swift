@@ -7,25 +7,33 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
-class MDTodoItem: NSObject, MDModelProtocol {
-    var id: Int = 0
-    var item: String = "Description"
-    var due: String = "NULL"
-    var completed: Int = 0
-    var associatedUser: String = ""
+class MDTodoItem: Object, MDModelProtocol {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var item: String = "Description"
+    @objc dynamic var due: String = "NULL"
+    @objc dynamic var completed: Int = 0
     
-    init(from json: JSON) {
-        super.init()
+    var isCompleted: Bool {
+        return completed == 1
+    }
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+}
+
+extension MDTodoItem {
+    
+    convenience init(from json: JSON) {
+        self.init()
         id = json["id"] as? Int ?? 0
         item = json["item"] as? String ?? "Description"
         due = json["due"] as? String ?? "NULL"
         completed = json["completed"] as? Int ?? 0
-        associatedUser = json["associatedUser"] as? String ?? ""
-    }
-    
-    var isCompleted: Bool {
-        return completed == 1
     }
     
 }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class ItemViewController: UIViewController {
     
@@ -42,7 +44,8 @@ class ItemViewController: UIViewController {
     }
     
     func createNew(token: String, item: String, due: String) {
-        MDServerService.shareInstance().createItem(token: token, item: item, due: due, success: { [weak self] (_) in
+        MDServerService.shareInstance().createItem(token: token, item: item, due: due, success: { [weak self] (todo) in
+            self?.save(todo: todo)
             self?.completionSuccessful?()
             }, failure: { (err) in
                 print(err.getString)
@@ -51,10 +54,18 @@ class ItemViewController: UIViewController {
     
     func editItem(token: String, item: String, due: String) {
         let completed = completedSwitch.isOn ? 1 : 0
-        MDServerService.shareInstance().editItem(token: token, item: item, due: due, id: (self.item?.id)!, completed: completed, success: { [weak self] (_) in
+        MDServerService.shareInstance().editItem(token: token, item: item, due: due, id: (self.item?.id)!, completed: completed, success: { [weak self] (todo) in
+            self?.save(todo: todo)
             self?.completionSuccessful?()
         }) { (err) in
             print(err.getString)
+        }
+    }
+    
+    func save(todo: MDTodoItem) {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(todo, update: true)
         }
     }
     

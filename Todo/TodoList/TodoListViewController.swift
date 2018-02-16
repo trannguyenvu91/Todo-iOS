@@ -11,22 +11,32 @@ import UIKit
 class TodoListViewController: UIViewController {
 
     var dataSource: MDTableViewDataSource!
-    let dataProvider = MDTodoListProvider()
+    let viewModel = TodoListViewModel()
     var didSelectItem: ((MDTodoItem) -> Void)?
     @IBOutlet weak var tableView: UITableView!
+    let refreshIndicator = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource = MDTableViewDataSource(tableView: tableView, owner: self, dataProvider: dataProvider, cellID: "Cell")
+        dataSource = MDTableViewDataSource(tableView: tableView, owner: self, dataProvider: viewModel, cellID: "Cell")
+        tableView.addSubview(refreshIndicator)
+        refreshIndicator.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        viewModel.finishUpdating = { [weak self] in
+            self?.refreshIndicator.endRefreshing()
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        dataProvider.getItems()
     }
     
     func deleteItem(at indexPath: IndexPath) {
-        dataProvider.deleteItem(at: indexPath)
+        viewModel.deleteItem(at: indexPath)
+    }
+    
+    @objc func refreshData() {
+        refreshIndicator.beginRefreshing()
+        viewModel.updateItems()
     }
     
 }
@@ -35,7 +45,7 @@ extension TodoListViewController: MDTableViewDataSourceProtocol {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let item = dataProvider.model(at: indexPath) as? MDTodoItem {
+        if let item = viewModel.model(at: indexPath) as? MDTodoItem {
             didSelectItem?(item)
         }
     }

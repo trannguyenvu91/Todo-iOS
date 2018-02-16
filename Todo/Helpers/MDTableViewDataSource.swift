@@ -32,6 +32,10 @@ class MDTableViewDataSource: NSObject {
         tableView.dataSource = self
         tableView.delegate = self
         dataProvider.updatesNotification = {[weak self] deletions, insertions, modifications in
+            guard let count = self?.tableView.numberOfRows(inSection: 0), count > 0 else {
+                self?.tableView.reloadData()
+                return
+            }
             self?.tableView.beginUpdates()
             self?.tableView.insertRows(at: insertions, with: .automatic)
             self?.tableView.deleteRows(at: deletions, with: .automatic)

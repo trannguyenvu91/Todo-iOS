@@ -14,6 +14,8 @@ class TodoTableCell: UITableViewCell, MDModelViewProtocol {
         guard let todo = model as? MDTodoItem else { return }
         textLabel?.text = todo.item
         detailTextLabel?.text = todo.due
+        textLabel?.alpha = todo.isCompleted ? 0.4 : 1
+        detailTextLabel?.alpha = todo.isCompleted ? 0.4 : 1
     }
 
 }
