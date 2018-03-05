@@ -13,6 +13,7 @@ import RealmSwift
 class MDDatabase: NSObject {
     
     static let shareInstance = MDDatabase()
+    let realm = try! Realm()
     
     func saveModels<T>(models: [T], update: Bool) where T: Object {
         guard update, let primaryKey = T.primaryKey() else {
@@ -20,25 +21,19 @@ class MDDatabase: NSObject {
             return
         }
         
-        let realm = try! Realm()
         let importIDs = models.flatMap{$0.value(forKeyPath: primaryKey)}
         //fetch all models
         let predicate = NSPredicate(format: "!(\(primaryKey) IN %@)", argumentArray: [importIDs])
         let deleteModels = realm.objects(T.self).filter(predicate)
         print("\(T.description()) - Import \(importIDs.count) and delete: \(deleteModels.count)")
-        do {
-            try realm.write {
-                realm.add(models, update: true)
-                realm.delete(deleteModels)
-            }
-        } catch {
-            print(error.getString)
+        try! realm.write {
+            realm.add(models, update: true)
+            realm.delete(deleteModels)
         }
         
     }
     
     func importModels<T>(models: [T]) where T: Object {
-        let realm = try! Realm()
         try! realm.write {
             realm.add(models)
         }

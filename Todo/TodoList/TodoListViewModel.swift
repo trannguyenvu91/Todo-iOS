@@ -21,12 +21,16 @@ class TodoListViewModel: NSObject, MDListProviderProtocol {
     override init() {
         super.init()
         fetchItems()
-        perform(#selector(updateItems), with: nil, afterDelay: 1)
+        perform(#selector(updateTodos), with: nil, afterDelay: 1)
     }
     
-    @objc func updateItems() {
+    @objc func updateTodos() {
         MDServerService.shareInstance().getAllItems(token: MDUser.sessionUser.token, success: { [weak self] (todoItems) in
             MDDatabase.shareInstance.saveModels(models: todoItems, update: true)
+            let realm = try! Realm()
+            try! realm.write {
+                MDUser.sessionUser.todos.replaceSubrange(0..<MDUser.sessionUser.todos.count, with: todoItems)
+            }
             self?.finishUpdating?()
         }) { [weak self] (err) in
             print(err.getString)
@@ -35,7 +39,7 @@ class TodoListViewModel: NSObject, MDListProviderProtocol {
     }
     
     func fetchItems() {
-        items = try! Realm().objects(MDTodoItem.self).sorted(byKeyPath: "id")
+        items = MDUser.sessionUser.todos.sorted(byKeyPath: "id")
         notificationToken = items?._observe({ [weak self] (changes) in
             switch changes {
             case .initial:
@@ -51,7 +55,7 @@ class TodoListViewModel: NSObject, MDListProviderProtocol {
         })
     }
     
-    func deleteItem(at indexPath: IndexPath) {
+    func deleteTodo(at indexPath: IndexPath) {
         let item = items![indexPath.row]
         MDServerService.shareInstance().deleteItem(token: MDUser.sessionUser.token, itemID: item.id, success: {(_) in
             let realm = try! Realm()

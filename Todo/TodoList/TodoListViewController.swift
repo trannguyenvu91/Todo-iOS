@@ -12,7 +12,7 @@ class TodoListViewController: UIViewController {
 
     var dataSource: MDTableViewDataSource!
     let viewModel = TodoListViewModel()
-    var didSelectItem: ((MDTodoItem) -> Void)?
+    var didSelectTodo: ((MDTodoItem) -> Void)?
     @IBOutlet weak var tableView: UITableView!
     let refreshIndicator = UIRefreshControl()
     
@@ -31,12 +31,12 @@ class TodoListViewController: UIViewController {
     }
     
     func deleteItem(at indexPath: IndexPath) {
-        viewModel.deleteItem(at: indexPath)
+        viewModel.deleteTodo(at: indexPath)
     }
     
     @objc func refreshData() {
         refreshIndicator.beginRefreshing()
-        viewModel.updateItems()
+        viewModel.updateTodos()
     }
     
 }
@@ -45,8 +45,8 @@ extension TodoListViewController: MDTableViewDataSourceProtocol {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let item = viewModel.model(at: indexPath) as? MDTodoItem {
-            didSelectItem?(item)
+        if let todo = viewModel.model(at: indexPath) as? MDTodoItem {
+            didSelectTodo?(todo)
         }
     }
     

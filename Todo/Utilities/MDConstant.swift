@@ -46,7 +46,7 @@ public struct MDConstant {
     }
     
     //MARK: Token prefix
-    static let tokenPrefix = "CookRecipes_"
+    static let tokenPrefix = "Bearer "
     static let tokenIdleTime = 7 * 24 * 3600
     
 }

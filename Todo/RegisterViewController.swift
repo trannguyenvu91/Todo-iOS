@@ -42,7 +42,7 @@ class RegisterViewController: UIViewController {
 class RegisterViewModel: LoginViewModel {
     
     func register(user: String, password: String) {
-        MDServerService.shareInstance().signUp(email: user, password: password, success: { [weak self] (response) in
+        MDServerService.shareInstance().register(email: user, password: password, success: { [weak self] (response) in
             if let login = response["login"] as? String, login == "ok" {
                 self?.login(user: user, password: password)
             } else if let errorMessage = response["error"] as? String {

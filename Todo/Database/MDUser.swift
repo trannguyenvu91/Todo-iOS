@@ -13,6 +13,7 @@ import RealmSwift
 class MDUser: Object {
     @objc dynamic var token = ""
     @objc dynamic var email = ""
+    var todos = List<MDTodoItem>()
     
     private static var _user: MDUser?
     

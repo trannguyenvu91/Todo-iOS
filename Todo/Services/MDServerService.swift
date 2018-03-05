@@ -33,7 +33,7 @@ class MDServerService: NSObject {
         }
     }
     
-    func signUp(email: String, password: String, success: @escaping (JSON) -> Void, failure: @escaping MDRequestFailure) {
+    func register(email: String, password: String, success: @escaping (JSON) -> Void, failure: @escaping MDRequestFailure) {
         let request = URLRequest.mdRequest(path: RoutingPath.register, method: .post, token: nil, param: ["username": email, "password": password])
         let resource = MDResource<Any>(URLRequest: request!, parseResponse: nil)
         requestAPI(resource: resource, success: { (responseData) in

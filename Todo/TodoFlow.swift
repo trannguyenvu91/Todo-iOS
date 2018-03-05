@@ -88,7 +88,7 @@ extension TodoFlow {
         let storyBoard = getMainStoryBoard()
         let todoListVC = storyBoard.instantiateViewController(withIdentifier: "TodoListViewController") as! TodoListViewController
         todoListVC.title = "Todo list"
-        todoListVC.didSelectItem = { [weak self] item in
+        todoListVC.didSelectTodo = { [weak self] item in
             self?.presentItemVC(item: item)
         }
         return todoListVC
@@ -109,9 +109,9 @@ extension TodoFlow {
     
     func getItemVC(item: MDTodoItem?) -> UIViewController {
         let storyBoard = getMainStoryBoard()
-        let itemVC = storyBoard.instantiateViewController(withIdentifier: "ItemViewController") as! ItemViewController
+        let itemVC = storyBoard.instantiateViewController(withIdentifier: "ItemViewController") as! TodoViewController
         itemVC.title = "Item detail"
-        itemVC.item = item
+        itemVC.todo = item
         itemVC.completionSuccessful = { [weak self] in
             self?.navigationVC.popViewController(animated: true)
         }

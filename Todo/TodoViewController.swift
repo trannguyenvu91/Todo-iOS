@@ -10,9 +10,9 @@ import UIKit
 import Realm
 import RealmSwift
 
-class ItemViewController: UIViewController {
+class TodoViewController: UIViewController {
     
-    var item: MDTodoItem?
+    var todo: MDTodoItem?
     var completionSuccessful: (() -> Void)?
     
     @IBOutlet weak var titleTextField: UITextField!
@@ -22,9 +22,9 @@ class ItemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleTextField.text = item?.item
-        dueTextField.text = item?.due
-        completedSwitch.isOn = item?.isCompleted ?? false
+        titleTextField.text = todo?.item
+        dueTextField.text = todo?.due
+        completedSwitch.isOn = todo?.isCompleted ?? false
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,7 +36,7 @@ class ItemViewController: UIViewController {
         guard let title = titleTextField.text, let due = dueTextField.text else { return }
         let token = MDUser.sessionUser.token
         
-        if item == nil {
+        if todo == nil {
             createNew(token: token, item: title, due: due)
         } else {
             editItem(token: token, item: title, due: due)
@@ -44,8 +44,8 @@ class ItemViewController: UIViewController {
     }
     
     func createNew(token: String, item: String, due: String) {
-        MDServerService.shareInstance().createItem(token: token, item: item, due: due, success: { [weak self] (todo) in
-            self?.save(todo: todo)
+        MDServerService.shareInstance().createItem(token: token, item: item, due: due, success: { [weak self] (aTodo) in
+            self?.save(aTodo)
             self?.completionSuccessful?()
             }, failure: { (err) in
                 print(err.getString)
@@ -54,18 +54,21 @@ class ItemViewController: UIViewController {
     
     func editItem(token: String, item: String, due: String) {
         let completed = completedSwitch.isOn ? 1 : 0
-        MDServerService.shareInstance().editItem(token: token, item: item, due: due, id: (self.item?.id)!, completed: completed, success: { [weak self] (todo) in
-            self?.save(todo: todo)
+        MDServerService.shareInstance().editItem(token: token, item: item, due: due, id: (self.todo?.id)!, completed: completed, success: { [weak self] (aTodo) in
+            self?.save(aTodo)
             self?.completionSuccessful?()
         }) { (err) in
             print(err.getString)
         }
     }
     
-    func save(todo: MDTodoItem) {
+    func save(_ aTodo: MDTodoItem) {
         let realm = try! Realm()
         try! realm.write {
-            realm.add(todo, update: true)
+            realm.add(aTodo, update: true)
+            if todo == nil {
+                MDUser.sessionUser.todos.append(aTodo)
+            }
         }
     }
     
